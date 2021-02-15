@@ -1,0 +1,16 @@
+name: ErrorLogger
+api: 3.0.0
+main: vixikhd\errorlogger\ErrorLogger
+description: Saves Internal Server Errors
+author: VixikHD
+version: '1.0'
+
+commands:
+  err:
+    description: ErrorLogger commands
+    permission: err.cmd
+
+permissions:
+  err.cmd:
+    description: Permission for all the ErrorLoger commands
+    default: op
