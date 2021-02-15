@@ -8,9 +8,9 @@ version: '1.0'
 commands:
   err:
     description: ErrorLogger commands
-    permission: err.cmd
+    permission: errorlogger.cmd
 
 permissions:
-  err.cmd:
-    description: Permission for all the ErrorLoger commands
+  errorlogger.cmd:
+    description: Permission for all the ErrorLogger commands
     default: op

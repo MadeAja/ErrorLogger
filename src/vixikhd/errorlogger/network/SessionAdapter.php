@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace vixikhd\errorlogger\network;
 
+use Exception;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\PlayerNetworkSessionAdapter;
 use pocketmine\network\mcpe\protocol\BatchPacket;
@@ -11,7 +12,6 @@ use pocketmine\network\mcpe\protocol\DataPacket;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\timings\Timings;
-use Throwable;
 use vixikhd\errorlogger\ErrorLogger;
 
 /**
@@ -40,7 +40,7 @@ class SessionAdapter extends PlayerNetworkSessionAdapter {
 
     /**
      * @param DataPacket $packet
-     * @throws Throwable
+     * @throws Exception
      */
     public function handleDataPacket(DataPacket $packet) {
         if(!$this->player->isConnected()){
@@ -63,11 +63,12 @@ class SessionAdapter extends PlayerNetworkSessionAdapter {
                 if(!$packet->handle($this)) {
                     $this->server->getLogger()->debug("Unhandled " . $packet->getName() . " received from " . $this->player->getName() . ": " . base64_encode($packet->buffer));
                 }
-            } catch (Throwable $throwable) {
+            } catch (Exception $exception) {
                 if(!$packet instanceof BatchPacket) { // Removes duplicates
-                    ErrorLogger::getInstance()->saveError($this->player, $throwable);
+                    ErrorLogger::getInstance()->saveError($this->player, $exception);
                 }
-                throw $throwable;
+
+                throw $exception; // Lets RakLibInterface handle the error
             }
         }
 

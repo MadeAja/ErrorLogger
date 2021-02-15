@@ -43,9 +43,6 @@ class ErrorLogger extends PluginBase implements Listener {
         }), 2);
 
 
-        if(!is_dir($this->getDataFolder())) {
-            mkdir($this->getDataFolder());
-        }
         if(!is_dir($this->getDataFolder() . "fixed")) {
             mkdir($this->getDataFolder() . "fixed");
         }
